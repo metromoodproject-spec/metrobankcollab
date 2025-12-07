@@ -1,0 +1,634 @@
+/* ============================================
+   METROBANK ONLINE BANKING - STYLES
+   ============================================ */
+
+/* Base Styles */
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --metro-blue: #004785;
+    --metro-dark-blue: #003366;
+    --metro-light-blue: #0066b3;
+    --metro-gold: #c4a000;
+    --metro-red: #8b0000;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --error-red: #ef4444;
+    --pink-primary: #ec4899;
+    --pink-light: #fce7f3;
+    --pink-dark: #be185d;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+}
+
+/* Gradient Backgrounds */
+.metro-gradient {
+    background: linear-gradient(135deg, #004785 0%, #003366 100%);
+}
+
+.pink-gradient {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+}
+
+/* Header Fixed */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: 64px;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 64px;
+    bottom: 0;
+    width: 256px;
+    overflow-y: auto;
+    z-index: 40;
+}
+
+.sidebar-item {
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-left: 4px solid #c4a000;
+}
+
+/* Main Content Area */
+main {
+    margin-left: 0;
+    padding-top: 80px;
+    min-height: calc(100vh - 64px);
+}
+
+@media (min-width: 1024px) {
+    main {
+        margin-left: 256px;
+    }
+}
+
+/* Page Container */
+.page {
+    padding: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .page {
+        padding: 24px;
+    }
+}
+
+/* Card Styles */
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
+   METROMOOD STYLES - WHITE & PINK THEME
+   ============================================ */
+
+#metromoodPage {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%);
+    min-height: calc(100vh - 80px);
+    border-radius: 0;
+}
+
+#metromoodPage h2 {
+    color: #be185d;
+}
+
+#metromoodPage .intro-card {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
+}
+
+.mood-bubble {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mood-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+}
+
+.mood-bubble.selected {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px #ec4899, 0 8px 25px rgba(236, 72, 153, 0.4);
+}
+
+#metromoodPage .card-white {
+    background: white;
+    border: 1px solid #fce7f3;
+}
+
+#metromoodPage .savings-goal-card {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    border: 2px solid #f9a8d4;
+}
+
+#metromoodPage .btn-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+}
+
+#metromoodPage .btn-pink:hover {
+    background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
+}
+
+/* ============================================
+   FLOWTRACKER STYLES - WHITE & PINK THEME
+   ============================================ */
+
+#flowtrackerPage {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%);
+    min-height: calc(100vh - 80px);
+}
+
+#flowtrackerPage h2 {
+    color: #be185d;
+}
+
+#flowtrackerPage .intro-card {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
+}
+
+#flowtrackerPage .card-white {
+    background: white;
+    border: 1px solid #fce7f3;
+}
+
+/* Calendar Styles */
+.calendar-day {
+    transition: all 0.2s ease;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background: #fce7f3;
+}
+
+.calendar-day.period {
+    background: #fda4af;
+    color: #9f1239;
+    font-weight: 600;
+}
+
+.calendar-day.predicted {
+    background: #fff1f2;
+    border: 2px dashed #fb7185;
+}
+
+.calendar-day.today {
+    border: 2px solid #ec4899;
+    font-weight: bold;
+}
+
+.calendar-day.selected {
+    background: #ec4899;
+    color: white;
+}
+
+/* Symptom Tags */
+.symptom-tag {
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.symptom-tag:hover {
+    transform: translateY(-2px);
+    background: #fce7f3;
+}
+
+.symptom-tag.active {
+    background: #ec4899 !important;
+    color: white !important;
+}
+
+/* Locked Savings Card - Pink Theme */
+.locked-savings-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+}
+
+/* Period Alert */
+.period-alert {
+    background: linear-gradient(90deg, #fce7f3 0%, #fbcfe8 100%);
+    border-left: 4px solid #ec4899;
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #004785;
+    box-shadow: 0 0 0 3px rgba(0, 71, 133, 0.1);
+}
+
+.form-input:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+}
+
+.form-input-pink:focus {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #004785;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #003366;
+}
+
+.btn-primary:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btn-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+}
+
+.btn-pink:hover {
+    background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #004785;
+    color: #004785;
+}
+
+.btn-outline:hover {
+    background: #004785;
+    color: white;
+}
+
+.btn-outline-pink {
+    background: transparent;
+    border: 2px solid #ec4899;
+    color: #ec4899;
+}
+
+.btn-outline-pink:hover {
+    background: #ec4899;
+    color: white;
+}
+
+/* Quick Action Buttons */
+.quick-action {
+    transition: all 0.2s ease;
+}
+
+.quick-action:hover {
+    transform: translateY(-3px);
+}
+
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 16px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    transform: translateX(150%);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.success {
+    background: #10b981;
+    color: white;
+}
+
+.toast.error {
+    background: #ef4444;
+    color: white;
+}
+
+.toast.warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.toast.info {
+    background: #004785;
+    color: white;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.notification-badge {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   TRANSACTION & ACCOUNT CARDS
+   ============================================ */
+
+.transaction-item {
+    transition: all 0.2s ease;
+}
+
+.transaction-item:hover {
+    background: #f9fafb;
+}
+
+.account-card {
+    transition: all 0.3s ease;
+}
+
+.account-card:hover {
+    transform: scale(1.02);
+}
+
+/* Bill Category */
+.bill-category {
+    transition: all 0.2s ease;
+}
+
+.bill-category:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   BADGE STYLES
+   ============================================ */
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-new {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #000;
+}
+
+.badge-pink {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+    color: white;
+}
+
+/* ============================================
+   SCROLLBAR STYLES
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 1024px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .page {
+        padding: 12px;
+    }
+    
+    .modal-content {
+        padding: 16px;
+        margin: 8px;
+    }
+}
+
+/* Hide on mobile */
+.hide-mobile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hide-mobile {
+        display: block;
+    }
+}
+
+/* Grid utilities */
+.grid-responsive {
+    display: grid;
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    .grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid-responsive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
