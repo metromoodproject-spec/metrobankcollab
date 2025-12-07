@@ -19,6 +19,14 @@
     --success-green: #10b981;
     --warning-orange: #f59e0b;
     --error-red: #ef4444;
+    --pink-primary: #ec4899;
+    --pink-light: #fce7f3;
+    --pink-dark: #be185d;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -31,17 +39,38 @@ body {
     background: linear-gradient(135deg, #004785 0%, #003366 100%);
 }
 
-.gold-gradient {
-    background: linear-gradient(135deg, #c4a000 0%, #8b7500 100%);
+.pink-gradient {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
 }
 
-.red-gradient {
-    background: linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
+/* Header Fixed */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: 64px;
 }
 
 /* Sidebar Styles */
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 64px;
+    bottom: 0;
+    width: 256px;
+    overflow-y: auto;
+    z-index: 40;
+}
+
 .sidebar-item {
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
 }
 
 .sidebar-item:hover {
@@ -53,9 +82,35 @@ body {
     border-left: 4px solid #c4a000;
 }
 
+/* Main Content Area */
+main {
+    margin-left: 0;
+    padding-top: 80px;
+    min-height: calc(100vh - 64px);
+}
+
+@media (min-width: 1024px) {
+    main {
+        margin-left: 256px;
+    }
+}
+
+/* Page Container */
+.page {
+    padding: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .page {
+        padding: 24px;
+    }
+}
+
 /* Card Styles */
 .card-shadow {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .card-hover {
@@ -64,122 +119,161 @@ body {
 
 .card-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* MetroMood Styles */
+/* ============================================
+   METROMOOD STYLES - WHITE & PINK THEME
+   ============================================ */
+
+#metromoodPage {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%);
+    min-height: calc(100vh - 80px);
+    border-radius: 0;
+}
+
+#metromoodPage h2 {
+    color: #be185d;
+}
+
+#metromoodPage .intro-card {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%);
+}
+
 .mood-bubble {
     transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .mood-bubble:hover {
-    transform: scale(1.15);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
 }
 
 .mood-bubble.selected {
-    transform: scale(1.2);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px #ec4899, 0 8px 25px rgba(236, 72, 153, 0.4);
 }
 
-/* Animations */
-.pulse-animation {
-    animation: pulse 2s infinite;
+#metromoodPage .card-white {
+    background: white;
+    border: 1px solid #fce7f3;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+#metromoodPage .savings-goal-card {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    border: 2px solid #f9a8d4;
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease;
+#metromoodPage .btn-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
 }
 
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
+#metromoodPage .btn-pink:hover {
+    background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
 }
 
-.notification-badge {
-    animation: bounce 1s infinite;
+/* ============================================
+   FLOWTRACKER STYLES - WHITE & PINK THEME
+   ============================================ */
+
+#flowtrackerPage {
+    background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%);
+    min-height: calc(100vh - 80px);
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+#flowtrackerPage h2 {
+    color: #be185d;
 }
 
-.spin {
-    animation: spin 1s linear infinite;
+#flowtrackerPage .intro-card {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+#flowtrackerPage .card-white {
+    background: white;
+    border: 1px solid #fce7f3;
 }
 
-/* Flowtracker Calendar Styles */
+/* Calendar Styles */
 .calendar-day {
     transition: all 0.2s ease;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .calendar-day:hover {
-    background: #e8f4fc;
+    background: #fce7f3;
 }
 
 .calendar-day.period {
-    background: #ffcdd2;
-    color: #c62828;
+    background: #fda4af;
+    color: #9f1239;
+    font-weight: 600;
 }
 
 .calendar-day.predicted {
-    background: #fff3e0;
-    border: 2px dashed #ff9800;
+    background: #fff1f2;
+    border: 2px dashed #fb7185;
 }
 
 .calendar-day.today {
-    border: 2px solid #004785;
+    border: 2px solid #ec4899;
     font-weight: bold;
 }
 
 .calendar-day.selected {
-    background: #004785;
+    background: #ec4899;
     color: white;
 }
 
 /* Symptom Tags */
 .symptom-tag {
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    user-select: none;
 }
 
 .symptom-tag:hover {
     transform: translateY(-2px);
+    background: #fce7f3;
 }
 
 .symptom-tag.active {
-    background: #004785;
+    background: #ec4899 !important;
+    color: white !important;
+}
+
+/* Locked Savings Card - Pink Theme */
+.locked-savings-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
     color: white;
 }
 
-/* Locked Savings Card */
-.locked-savings {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Period Alert */
+.period-alert {
+    background: linear-gradient(90deg, #fce7f3 0%, #fbcfe8 100%);
+    border-left: 4px solid #ec4899;
 }
 
-/* Form Styles */
+/* ============================================
+   FORM STYLES
+   ============================================ */
+
 .form-input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 12px 16px;
     border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
+    border-radius: 8px;
+    font-size: 14px;
     transition: all 0.2s ease;
+    background: white;
 }
 
 .form-input:focus {
@@ -193,14 +287,27 @@ body {
     cursor: not-allowed;
 }
 
-/* Button Styles */
+.form-input-pink:focus {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+
 .btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
     font-weight: 500;
+    font-size: 14px;
     transition: all 0.2s ease;
     cursor: pointer;
     border: none;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -217,13 +324,13 @@ body {
     cursor: not-allowed;
 }
 
-.btn-success {
-    background: #10b981;
+.btn-pink {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
     color: white;
 }
 
-.btn-success:hover {
-    background: #059669;
+.btn-pink:hover {
+    background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
 }
 
 .btn-danger {
@@ -233,24 +340,6 @@ body {
 
 .btn-danger:hover {
     background: #dc2626;
-}
-
-.btn-warning {
-    background: #f59e0b;
-    color: white;
-}
-
-.btn-warning:hover {
-    background: #d97706;
-}
-
-.btn-secondary {
-    background: #6b7280;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #4b5563;
 }
 
 .btn-outline {
@@ -264,20 +353,36 @@ body {
     color: white;
 }
 
+.btn-outline-pink {
+    background: transparent;
+    border: 2px solid #ec4899;
+    color: #ec4899;
+}
+
+.btn-outline-pink:hover {
+    background: #ec4899;
+    color: white;
+}
+
 /* Quick Action Buttons */
 .quick-action {
     transition: all 0.2s ease;
 }
 
 .quick-action:hover {
-    opacity: 0.7;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
-/* Modal Styles */
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+
 .modal-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -286,6 +391,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    padding: 16px;
 }
 
 .modal-overlay.active {
@@ -295,11 +401,12 @@ body {
 
 .modal-content {
     background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 24px;
     width: 100%;
-    max-width: 28rem;
-    margin: 1rem;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
     transform: scale(0.9);
     transition: all 0.3s ease;
 }
@@ -308,17 +415,23 @@ body {
     transform: scale(1);
 }
 
-/* Toast Notification */
+/* ============================================
+   TOAST NOTIFICATION
+   ============================================ */
+
 .toast {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
+    bottom: 24px;
+    right: 24px;
+    padding: 16px 24px;
+    border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     z-index: 200;
     transform: translateX(150%);
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .toast.show {
@@ -345,7 +458,56 @@ body {
     color: white;
 }
 
-/* Transaction Item */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.notification-badge {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   TRANSACTION & ACCOUNT CARDS
+   ============================================ */
+
 .transaction-item {
     transition: all 0.2s ease;
 }
@@ -354,7 +516,6 @@ body {
     background: #f9fafb;
 }
 
-/* Account Card */
 .account-card {
     transition: all 0.3s ease;
 }
@@ -373,58 +534,35 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Progress Bar */
-.progress-bar {
-    height: 8px;
-    background: #e5e7eb;
+/* ============================================
+   BADGE STYLES
+   ============================================ */
+
+.badge {
+    padding: 4px 8px;
     border-radius: 9999px;
-    overflow: hidden;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-.progress-fill {
-    height: 100%;
-    border-radius: 9999px;
-    transition: width 0.5s ease;
+.badge-new {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #000;
 }
 
-/* Tab Styles */
-.tab-btn {
-    padding: 0.75rem 1.5rem;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
-    cursor: pointer;
+.badge-pink {
+    background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+    color: white;
 }
 
-.tab-btn:hover {
-    color: #004785;
-}
+/* ============================================
+   SCROLLBAR STYLES
+   ============================================ */
 
-.tab-btn.active {
-    color: #004785;
-    border-bottom-color: #004785;
-}
-
-/* Responsive Styles */
-@media (max-width: 1024px) {
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    
-    .sidebar.open {
-        transform: translateX(0);
-    }
-}
-
-@media (max-width: 768px) {
-    .hide-mobile {
-        display: none;
-    }
-}
-
-/* Scrollbar Styles */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -433,81 +571,64 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #c1c1c1;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #a1a1a1;
 }
 
-/* Loading Spinner */
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #e5e7eb;
-    border-top-color: #004785;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 1024px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    #sidebar.open {
+        transform: translateX(0);
+    }
 }
 
-/* Badge Styles */
-.badge {
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
+@media (max-width: 640px) {
+    .page {
+        padding: 12px;
+    }
+    
+    .modal-content {
+        padding: 16px;
+        margin: 8px;
+    }
 }
 
-.badge-new {
-    background: #fbbf24;
-    color: #000;
+/* Hide on mobile */
+.hide-mobile {
+    display: none;
 }
 
-.badge-success {
-    background: #10b981;
-    color: white;
+@media (min-width: 768px) {
+    .hide-mobile {
+        display: block;
+    }
 }
 
-.badge-warning {
-    background: #f59e0b;
-    color: white;
+/* Grid utilities */
+.grid-responsive {
+    display: grid;
+    gap: 16px;
 }
 
-.badge-danger {
-    background: #ef4444;
-    color: white;
+@media (min-width: 768px) {
+    .grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* Tooltip */
-.tooltip {
-    position: relative;
-}
-
-.tooltip::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1f2937;
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-}
-
-.tooltip:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Print Styles */
-@media print {
-    .no-print {
-        display: none !important;
+@media (min-width: 1024px) {
+    .grid-responsive {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
