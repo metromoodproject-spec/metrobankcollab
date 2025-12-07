@@ -1,0 +1,513 @@
+/* ============================================
+   METROBANK ONLINE BANKING - STYLES
+   ============================================ */
+
+/* Base Styles */
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --metro-blue: #004785;
+    --metro-dark-blue: #003366;
+    --metro-light-blue: #0066b3;
+    --metro-gold: #c4a000;
+    --metro-red: #8b0000;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --error-red: #ef4444;
+}
+
+body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+}
+
+/* Gradient Backgrounds */
+.metro-gradient {
+    background: linear-gradient(135deg, #004785 0%, #003366 100%);
+}
+
+.gold-gradient {
+    background: linear-gradient(135deg, #c4a000 0%, #8b7500 100%);
+}
+
+.red-gradient {
+    background: linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
+}
+
+/* Sidebar Styles */
+.sidebar-item {
+    transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-left: 4px solid #c4a000;
+}
+
+/* Card Styles */
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* MetroMood Styles */
+.mood-bubble {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mood-bubble:hover {
+    transform: scale(1.15);
+}
+
+.mood-bubble.selected {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Animations */
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.notification-badge {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Flowtracker Calendar Styles */
+.calendar-day {
+    transition: all 0.2s ease;
+}
+
+.calendar-day:hover {
+    background: #e8f4fc;
+}
+
+.calendar-day.period {
+    background: #ffcdd2;
+    color: #c62828;
+}
+
+.calendar-day.predicted {
+    background: #fff3e0;
+    border: 2px dashed #ff9800;
+}
+
+.calendar-day.today {
+    border: 2px solid #004785;
+    font-weight: bold;
+}
+
+.calendar-day.selected {
+    background: #004785;
+    color: white;
+}
+
+/* Symptom Tags */
+.symptom-tag {
+    transition: all 0.2s;
+}
+
+.symptom-tag:hover {
+    transform: translateY(-2px);
+}
+
+.symptom-tag.active {
+    background: #004785;
+    color: white;
+}
+
+/* Locked Savings Card */
+.locked-savings {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Form Styles */
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #004785;
+    box-shadow: 0 0 0 3px rgba(0, 71, 133, 0.1);
+}
+
+.form-input:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: #004785;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #003366;
+}
+
+.btn-primary:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #004785;
+    color: #004785;
+}
+
+.btn-outline:hover {
+    background: #004785;
+    color: white;
+}
+
+/* Quick Action Buttons */
+.quick-action {
+    transition: all 0.2s ease;
+}
+
+.quick-action:hover {
+    opacity: 0.7;
+    transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 28rem;
+    margin: 1rem;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    transform: translateX(150%);
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.success {
+    background: #10b981;
+    color: white;
+}
+
+.toast.error {
+    background: #ef4444;
+    color: white;
+}
+
+.toast.warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.toast.info {
+    background: #004785;
+    color: white;
+}
+
+/* Transaction Item */
+.transaction-item {
+    transition: all 0.2s ease;
+}
+
+.transaction-item:hover {
+    background: #f9fafb;
+}
+
+/* Account Card */
+.account-card {
+    transition: all 0.3s ease;
+}
+
+.account-card:hover {
+    transform: scale(1.02);
+}
+
+/* Bill Category */
+.bill-category {
+    transition: all 0.2s ease;
+}
+
+.bill-category:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+}
+
+/* Tab Styles */
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.tab-btn:hover {
+    color: #004785;
+}
+
+.tab-btn.active {
+    color: #004785;
+    border-bottom-color: #004785;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #004785;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-new {
+    background: #fbbf24;
+    color: #000;
+}
+
+.badge-success {
+    background: #10b981;
+    color: white;
+}
+
+.badge-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.badge-danger {
+    background: #ef4444;
+    color: white;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
