@@ -9,748 +9,735 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100">
     <!-- Sidebar Overlay -->
     <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/50 z-30 lg:hidden"></div>
 
     <!-- Header -->
-    <header class="metro-gradient text-white shadow-lg fixed w-full z-50">
-        <div class="flex items-center justify-between px-4 py-3">
+    <header class="metro-gradient text-white shadow-lg">
+        <div class="flex items-center justify-between px-4 py-3 h-16">
             <div class="flex items-center gap-4">
                 <button id="menuToggle" class="text-2xl lg:hidden">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
                         <span class="text-[#004785] font-bold text-lg">M</span>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold">Metrobank</h1>
+                        <h1 class="text-xl font-bold leading-tight">Metrobank</h1>
                         <p class="text-xs opacity-80">Online Banking</p>
                     </div>
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <div class="relative cursor-pointer" onclick="openModal('notificationsModal')">
+                <button class="relative" onclick="openModal('notificationsModal')">
                     <i class="fas fa-bell text-xl"></i>
                     <span id="notificationBadge" class="hidden absolute -top-2 -right-2 bg-red-500 text-xs w-5 h-5 rounded-full flex items-center justify-center notification-badge">1</span>
-                </div>
-                <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('settings')">
+                </button>
+                <button class="flex items-center gap-2" onclick="navigateTo('settings')">
                     <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
                         <i class="fas fa-user text-white text-sm"></i>
                     </div>
                     <span id="userName" class="hidden md:block text-sm">Juan Dela Cruz</span>
-                </div>
+                </button>
             </div>
         </div>
     </header>
 
-    <div class="flex pt-16">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="fixed left-0 top-16 h-full w-64 metro-gradient text-white transform -translate-x-full lg:translate-x-0 transition-transform z-40">
-            <nav class="py-4">
-                <div class="px-4 py-2 text-xs uppercase text-gray-300 tracking-wider">Main Menu</div>
-                
-                <div class="sidebar-item active flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="dashboard">
-                    <i class="fas fa-home w-5"></i>
-                    <span>Dashboard</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="accounts">
-                    <i class="fas fa-wallet w-5"></i>
-                    <span>Accounts</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="transfer">
-                    <i class="fas fa-exchange-alt w-5"></i>
-                    <span>Fund Transfer</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="bills">
-                    <i class="fas fa-file-invoice-dollar w-5"></i>
-                    <span>Pay Bills</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="transactions">
-                    <i class="fas fa-history w-5"></i>
-                    <span>Transaction History</span>
-                </div>
-                
-                <div class="px-4 py-2 mt-4 text-xs uppercase text-gray-300 tracking-wider">Wellness Tools</div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="metromood">
-                    <i class="fas fa-heart w-5 text-pink-300"></i>
-                    <span>MetroMood</span>
-                    <span class="ml-auto badge badge-new">New</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="flowtracker">
-                    <i class="fas fa-calendar-alt w-5 text-red-300"></i>
-                    <span>Flowtracker</span>
-                    <span class="ml-auto badge badge-new">New</span>
-                </div>
-                
-                <div class="px-4 py-2 mt-4 text-xs uppercase text-gray-300 tracking-wider">Settings</div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" data-page="settings">
-                    <i class="fas fa-cog w-5"></i>
-                    <span>Settings</span>
-                </div>
-                
-                <div class="sidebar-item flex items-center gap-3 px-4 py-3 cursor-pointer" onclick="logout()">
-                    <i class="fas fa-sign-out-alt w-5"></i>
-                    <span>Logout</span>
-                </div>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 lg:ml-64 p-4 md:p-6">
-            <!-- Dashboard Page -->
-            <div id="dashboardPage" class="page fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Dashboard</h2>
-                
-                <!-- Account Cards -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                    <div class="account-card bg-gradient-to-br from-[#004785] to-[#003366] text-white rounded-xl p-5 card-shadow cursor-pointer" data-account="savings" onclick="showAccountDetails('savings')">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-sm opacity-80">Savings Account</p>
-                                <p class="text-xs opacity-60">****1234</p>
-                            </div>
-                            <i class="fas fa-piggy-bank text-2xl opacity-80"></i>
-                        </div>
-                        <p class="text-2xl font-bold" id="mainBalance">₱ 125,450.75</p>
-                        <p class="text-xs opacity-60 mt-1">Available Balance</p>
-                    </div>
-                    
-                    <div class="account-card bg-gradient-to-br from-[#8b0000] to-[#5c0000] text-white rounded-xl p-5 card-shadow cursor-pointer" data-account="credit" onclick="showAccountDetails('credit')">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-sm opacity-80">Credit Card</p>
-                                <p class="text-xs opacity-60">****5678</p>
-                            </div>
-                            <i class="fas fa-credit-card text-2xl opacity-80"></i>
-                        </div>
-                        <p class="text-2xl font-bold" id="creditBalance">₱ 45,230.00</p>
-                        <p class="text-xs opacity-60 mt-1">Outstanding Balance</p>
-                    </div>
-                    
-                    <div class="account-card bg-gradient-to-br from-[#c4a000] to-[#8b7500] text-white rounded-xl p-5 card-shadow cursor-pointer" data-account="timeDeposit" onclick="showAccountDetails('timeDeposit')">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-sm opacity-80">Time Deposit</p>
-                                <p class="text-xs opacity-60">****9012</p>
-                            </div>
-                            <i class="fas fa-lock text-2xl opacity-80"></i>
-                        </div>
-                        <p class="text-2xl font-bold" id="timeDepositBalance">₱ 500,000.00</p>
-                        <p class="text-xs opacity-60 mt-1">Maturity: Dec 2024</p>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="bg-white rounded-xl p-5 card-shadow mb-6">
-                    <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
-                    <div class="grid grid-cols-5 md:grid-cols-5 gap-4">
-                        <div id="qaSend" class="quick-action flex flex-col items-center gap-2 cursor-pointer">
-                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-paper-plane text-[#004785]"></i>
-                            </div>
-                            <span class="text-xs text-gray-600">Send</span>
-                        </div>
-                        <div id="qaQR" class="quick-action flex flex-col items-center gap-2 cursor-pointer">
-                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-qrcode text-green-600"></i>
-                            </div>
-                            <span class="text-xs text-gray-600">QR Pay</span>
-                        </div>
-                        <div id="qaLoad" class="quick-action flex flex-col items-center gap-2 cursor-pointer">
-                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-mobile-alt text-yellow-600"></i>
-                            </div>
-                            <span class="text-xs text-gray-600">Load</span>
-                        </div>
-                        <div id="qaBills" class="quick-action flex flex-col items-center gap-2 cursor-pointer">
-                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-file-invoice text-purple-600"></i>
-                            </div>
-                            <span class="text-xs text-gray-600">Bills</span>
-                        </div>
-                        <div id="qaMore" class="quick-action flex flex-col items-center gap-2 cursor-pointer">
-                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-ellipsis-h text-gray-600"></i>
-                            </div>
-                            <span class="text-xs text-gray-600">More</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Transactions -->
-                <div class="bg-white rounded-xl p-5 card-shadow">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-semibold text-gray-800">Recent Transactions</h3>
-                        <a href="#" class="text-sm text-[#004785] hover:underline" onclick="viewAllTransactions(); return false;">View All</a>
-                    </div>
-                    <div id="recentTransactions" class="space-y-3">
-                        <!-- Transactions will be rendered here -->
-                    </div>
-                </div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="metro-gradient text-white">
+        <nav class="py-4">
+            <div class="px-4 py-2 text-xs uppercase text-gray-300 tracking-wider">Main Menu</div>
+            
+            <div class="sidebar-item active" data-page="dashboard">
+                <i class="fas fa-home w-5"></i>
+                <span>Dashboard</span>
             </div>
-
-            <!-- Accounts Page -->
-            <div id="accountsPage" class="page hidden fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">My Accounts</h2>
-                <div class="space-y-4">
-                    <div class="account-card bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" data-account="savings">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-piggy-bank text-[#004785] text-2xl"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Savings Account</p>
-                                    <p class="text-sm text-gray-500">1234-5678-9012-3456</p>
-                                    <span class="text-xs text-green-500 bg-green-100 px-2 py-0.5 rounded-full">Active</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xl font-bold text-gray-800">₱ 125,450.75</p>
-                                <p class="text-xs text-gray-500">Available Balance</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="account-card bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" data-account="credit">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-credit-card text-red-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Metrobank Credit Card</p>
-                                    <p class="text-sm text-gray-500">****-****-****-5678</p>
-                                    <span class="text-xs text-green-500 bg-green-100 px-2 py-0.5 rounded-full">Active</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xl font-bold text-gray-800">₱ 45,230.00</p>
-                                <p class="text-xs text-gray-500">Outstanding Balance</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="account-card bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" data-account="timeDeposit">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-lock text-yellow-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Time Deposit</p>
-                                    <p class="text-sm text-gray-500">****-****-****-9012</p>
-                                    <span class="text-xs text-blue-500 bg-blue-100 px-2 py-0.5 rounded-full">Locked</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xl font-bold text-gray-800">₱ 500,000.00</p>
-                                <p class="text-xs text-gray-500">Maturity: Dec 31, 2024</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
+            <div class="sidebar-item" data-page="accounts">
+                <i class="fas fa-wallet w-5"></i>
+                <span>Accounts</span>
             </div>
-
-            <!-- Transfer Page -->
-            <div id="transferPage" class="page hidden fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Fund Transfer</h2>
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-xl p-6 card-shadow">
-                        <h3 class="font-semibold text-gray-800 mb-4">Transfer Details</h3>
-                        <div id="transferForm" class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">From Account</label>
-                                <select class="form-input">
-                                    <option>Savings Account - ₱125,450.75</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Bank</label>
-                                <select id="transferBank" class="form-input">
-                                    <option value="metrobank">Metrobank</option>
-                                    <option value="bdo">BDO</option>
-                                    <option value="bpi">BPI</option>
-                                    <option value="landbank">Landbank</option>
-                                    <option value="gcash">GCash</option>
-                                    <option value="maya">Maya</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
-                                <input type="text" id="transferAccountNo" placeholder="Enter account number" class="form-input">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                                <div class="relative">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
-                                    <input type="text" id="transferAmount" placeholder="0.00" class="form-input pl-8">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Notes (Optional)</label>
-                                <input type="text" id="transferNotes" placeholder="Add a note" class="form-input">
-                            </div>
-                            <button id="transferBtn" class="btn btn-primary w-full">
-                                <i class="fas fa-paper-plane mr-2"></i>Transfer Now
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white rounded-xl p-6 card-shadow">
-                        <h3 class="font-semibold text-gray-800 mb-4">Saved Accounts</h3>
-                        <div id="savedAccountsList" class="space-y-3">
-                            <!-- Saved accounts will be rendered here -->
-                        </div>
-                    </div>
-                </div>
+            
+            <div class="sidebar-item" data-page="transfer">
+                <i class="fas fa-exchange-alt w-5"></i>
+                <span>Fund Transfer</span>
             </div>
-
-            <!-- Bills Page -->
-            <div id="billsPage" class="page hidden fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Pay Bills</h2>
-                <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="electricity">
-                        <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-bolt text-yellow-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Electricity</p>
-                        <p class="text-sm text-gray-500">Meralco, VECO, etc.</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="water">
-                        <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-tint text-blue-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Water</p>
-                        <p class="text-sm text-gray-500">Maynilad, Manila Water</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="internet">
-                        <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-wifi text-purple-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Internet & Cable</p>
-                        <p class="text-sm text-gray-500">PLDT, Globe, Converge</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="phone">
-                        <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-phone text-green-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Phone</p>
-                        <p class="text-sm text-gray-500">Postpaid plans</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="insurance">
-                        <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Insurance</p>
-                        <p class="text-sm text-gray-500">Health, Life, etc.</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="credit">
-                        <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-credit-card text-orange-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Credit Card</p>
-                        <p class="text-sm text-gray-500">All banks</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="loans">
-                        <div class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-hand-holding-usd text-teal-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Loans</p>
-                        <p class="text-sm text-gray-500">Home, Auto, Personal</p>
-                    </div>
-                    <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" data-category="government">
-                        <div class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mb-3">
-                            <i class="fas fa-landmark text-indigo-600 text-2xl"></i>
-                        </div>
-                        <p class="font-semibold text-gray-800">Government</p>
-                        <p class="text-sm text-gray-500">SSS, PhilHealth, etc.</p>
-                    </div>
-                </div>
+            
+            <div class="sidebar-item" data-page="bills">
+                <i class="fas fa-file-invoice-dollar w-5"></i>
+                <span>Pay Bills</span>
             </div>
-
-            <!-- Transactions History Page -->
-            <div id="transactionsPage" class="page hidden fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Transaction History</h2>
-                <div class="bg-white rounded-xl p-5 card-shadow mb-4">
-                    <div class="flex flex-wrap gap-4">
-                        <input type="text" placeholder="Search transactions..." class="form-input flex-1 min-w-[200px]">
-                        <select class="form-input w-auto">
-                            <option>All Types</option>
-                            <option>Money In</option>
-                            <option>Money Out</option>
-                        </select>
-                        <input type="date" class="form-input w-auto">
-                    </div>
-                </div>
-                <div id="allTransactionsList">
-                    <!-- All transactions will be rendered here -->
-                </div>
+            
+            <div class="sidebar-item" data-page="transactions">
+                <i class="fas fa-history w-5"></i>
+                <span>Transaction History</span>
             </div>
+            
+            <div class="px-4 py-2 mt-4 text-xs uppercase text-gray-300 tracking-wider">Wellness Tools</div>
+            
+            <div class="sidebar-item" data-page="metromood">
+                <i class="fas fa-heart w-5 text-pink-300"></i>
+                <span>MetroMood</span>
+                <span class="ml-auto badge badge-pink">New</span>
+            </div>
+            
+            <div class="sidebar-item" data-page="flowtracker">
+                <i class="fas fa-calendar-alt w-5 text-pink-300"></i>
+                <span>Flowtracker</span>
+                <span class="ml-auto badge badge-pink">New</span>
+            </div>
+            
+            <div class="px-4 py-2 mt-4 text-xs uppercase text-gray-300 tracking-wider">Settings</div>
+            
+            <div class="sidebar-item" data-page="settings">
+                <i class="fas fa-cog w-5"></i>
+                <span>Settings</span>
+            </div>
+            
+            <div class="sidebar-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span>Logout</span>
+            </div>
+        </nav>
+    </aside>
 
-            <!-- MetroMood Page -->
-            <div id="metromoodPage" class="page hidden fade-in">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">MetroMood</h2>
-                    <p class="text-gray-600">Banking that understands how you feel</p>
-                </div>
-
-                <!-- Introduction Card -->
-                <div class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded-xl p-6 card-shadow mb-6">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-heart text-3xl pulse-animation"></i>
+    <!-- Main Content -->
+    <main>
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page fade-in">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Dashboard</h2>
+            
+            <!-- Account Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <div class="account-card bg-gradient-to-br from-[#004785] to-[#003366] text-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showAccountDetails('savings')">
+                    <div class="flex justify-between items-start mb-4">
                         <div>
-                            <h3 class="text-xl font-bold">Welcome to MetroMood</h3>
-                            <p class="text-sm opacity-90">Your mood determines your savings goal</p>
+                            <p class="text-sm opacity-80">Savings Account</p>
+                            <p class="text-xs opacity-60">****1234</p>
                         </div>
+                        <i class="fas fa-piggy-bank text-2xl opacity-80"></i>
                     </div>
-                    <p class="text-sm opacity-80">From Metrobank's trusted services, we bring you a tool designed to make banking feel more personal. Select your mood and let us help you save smarter!</p>
+                    <p class="text-2xl font-bold" id="mainBalance">₱ 125,450.75</p>
+                    <p class="text-xs opacity-60 mt-1">Available Balance</p>
                 </div>
-
-                <!-- Balance Display -->
-                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                
+                <div class="account-card bg-gradient-to-br from-[#8b0000] to-[#5c0000] text-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showAccountDetails('credit')">
+                    <div class="flex justify-between items-start mb-4">
                         <div>
-                            <p class="text-gray-500 text-sm">Available Balance</p>
-                            <p class="text-3xl font-bold text-gray-800" id="moodBalance">₱ 125,450.75</p>
+                            <p class="text-sm opacity-80">Credit Card</p>
+                            <p class="text-xs opacity-60">****5678</p>
                         </div>
-                        <div class="flex gap-6">
-                            <div class="text-center">
-                                <p class="text-gray-500 text-xs">Mood Savings</p>
-                                <p class="text-xl font-bold text-purple-600" id="moodSavingsTotal">₱ 0.00</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-gray-500 text-xs">Locked Until</p>
-                                <p class="text-sm font-medium text-gray-600" id="lockStatus">No locked funds</p>
-                            </div>
+                        <i class="fas fa-credit-card text-2xl opacity-80"></i>
+                    </div>
+                    <p class="text-2xl font-bold" id="creditBalance">₱ 45,230.00</p>
+                    <p class="text-xs opacity-60 mt-1">Outstanding Balance</p>
+                </div>
+                
+                <div class="account-card bg-gradient-to-br from-[#c4a000] to-[#8b7500] text-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showAccountDetails('timeDeposit')">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-sm opacity-80">Time Deposit</p>
+                            <p class="text-xs opacity-60">****9012</p>
                         </div>
+                        <i class="fas fa-lock text-2xl opacity-80"></i>
+                    </div>
+                    <p class="text-2xl font-bold" id="timeDepositBalance">₱ 500,000.00</p>
+                    <p class="text-xs opacity-60 mt-1">Maturity: Dec 2024</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-xl p-5 card-shadow mb-6">
+                <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-5 gap-2 md:gap-4">
+                    <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-2" onclick="navigateTo('transfer')">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-paper-plane text-[#004785]"></i>
+                        </div>
+                        <span class="text-xs text-gray-600 text-center">Send</span>
+                    </div>
+                    <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-2" onclick="openModal('qrModal')">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-qrcode text-green-600"></i>
+                        </div>
+                        <span class="text-xs text-gray-600 text-center">QR Pay</span>
+                    </div>
+                    <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-2" onclick="openModal('loadModal')">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-mobile-alt text-yellow-600"></i>
+                        </div>
+                        <span class="text-xs text-gray-600 text-center">Load</span>
+                    </div>
+                    <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-2" onclick="navigateTo('bills')">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-file-invoice text-purple-600"></i>
+                        </div>
+                        <span class="text-xs text-gray-600 text-center">Bills</span>
+                    </div>
+                    <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-2" onclick="openModal('moreActionsModal')">
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-ellipsis-h text-gray-600"></i>
+                        </div>
+                        <span class="text-xs text-gray-600 text-center">More</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Mood Selection -->
-                <div class="bg-white rounded-xl p-6 card-shadow mb-6">
-                    <h3 class="font-semibold text-gray-800 mb-2">How are you feeling today?</h3>
-                    <p class="text-sm text-gray-500 mb-6">Your mood helps us suggest the perfect savings goal for you</p>
-                    
-                    <div class="flex flex-wrap justify-center gap-4 mb-6" id="moodBubbles">
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex flex-col items-center justify-center text-white" data-mood="happy" data-goal="500">
-                            <span class="mood-emoji text-2xl">😊</span>
-                            <span class="text-xs">Happy</span>
-                        </div>
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex flex-col items-center justify-center text-white" data-mood="calm" data-goal="300">
-                            <span class="mood-emoji text-2xl">😌</span>
-                            <span class="text-xs">Calm</span>
-                        </div>
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex flex-col items-center justify-center text-white" data-mood="excited" data-goal="1000">
-                            <span class="mood-emoji text-2xl">🤩</span>
-                            <span class="text-xs">Excited</span>
-                        </div>
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex flex-col items-center justify-center text-white" data-mood="thoughtful" data-goal="750">
-                            <span class="mood-emoji text-2xl">🤔</span>
-                            <span class="text-xs">Thoughtful</span>
-                        </div>
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex flex-col items-center justify-center text-white" data-mood="grateful" data-goal="1500">
-                            <span class="mood-emoji text-2xl">🥰</span>
-                            <span class="text-xs">Grateful</span>
-                        </div>
-                        <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex flex-col items-center justify-center text-white" data-mood="stressed" data-goal="200">
-                            <span class="mood-emoji text-2xl">😰</span>
-                            <span class="text-xs">Stressed</span>
-                        </div>
-                    </div>
+            <!-- Recent Transactions -->
+            <div class="bg-white rounded-xl p-5 card-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold text-gray-800">Recent Transactions</h3>
+                    <button class="text-sm text-[#004785] hover:underline" onclick="navigateTo('transactions')">View All</button>
+                </div>
+                <div id="recentTransactions" class="space-y-3"></div>
+            </div>
+        </div>
 
-                    <!-- Savings Goal Display -->
-                    <div id="savingsGoalCard" class="hidden bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-5 border border-purple-200">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white text-2xl" id="selectedMoodEmoji">😊</div>
+        <!-- Accounts Page -->
+        <div id="accountsPage" class="page hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">My Accounts</h2>
+            <div class="space-y-4">
+                <div class="bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" onclick="showAccountDetails('savings')">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-piggy-bank text-[#004785] text-2xl"></i>
+                            </div>
                             <div>
-                                <p class="text-sm text-gray-600">Based on your <span id="selectedMoodText" class="font-semibold text-purple-600">happy</span> mood</p>
-                                <p class="text-lg font-bold text-gray-800">Suggested Savings: <span id="suggestedAmount" class="text-purple-600">₱500</span></p>
+                                <p class="font-semibold text-gray-800">Savings Account</p>
+                                <p class="text-sm text-gray-500">1234-5678-9012-3456</p>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">Active</span>
                             </div>
                         </div>
-                        
-                        <div class="flex flex-col sm:flex-row gap-3 items-end">
-                            <div class="flex-1 w-full">
-                                <label class="text-sm text-gray-600">Amount to Save</label>
-                                <div class="relative">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
-                                    <input type="number" id="saveAmount" class="form-input pl-8" placeholder="Enter amount">
-                                </div>
-                            </div>
-                            <button id="saveFundsBtn" class="btn btn-primary whitespace-nowrap">
-                                <i class="fas fa-lock mr-2"></i>Save & Lock
-                            </button>
+                        <div class="text-left sm:text-right">
+                            <p class="text-xl font-bold text-gray-800">₱ 125,450.75</p>
+                            <p class="text-xs text-gray-500">Available Balance</p>
                         </div>
-                        <p class="text-xs text-gray-500 mt-3"><i class="fas fa-info-circle mr-1"></i>Funds will be locked for 7 days to help you build consistency</p>
                     </div>
                 </div>
+                
+                <div class="bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" onclick="showAccountDetails('credit')">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-credit-card text-red-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Metrobank Credit Card</p>
+                                <p class="text-sm text-gray-500">****-****-****-5678</p>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full">Active</span>
+                            </div>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <p class="text-xl font-bold text-gray-800">₱ 45,230.00</p>
+                            <p class="text-xs text-gray-500">Outstanding Balance</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-5 card-shadow cursor-pointer card-hover" onclick="showAccountDetails('timeDeposit')">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-lock text-yellow-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Time Deposit</p>
+                                <p class="text-sm text-gray-500">****-****-****-9012</p>
+                                <span class="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">Locked</span>
+                            </div>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <p class="text-xl font-bold text-gray-800">₱ 500,000.00</p>
+                            <p class="text-xs text-gray-500">Maturity: Dec 31, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Locked Savings -->
+        <!-- Transfer Page -->
+        <div id="transferPage" class="page hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Fund Transfer</h2>
+            <div class="grid lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-xl p-6 card-shadow">
-                    <h3 class="font-semibold text-gray-800 mb-4">Your Mood Savings</h3>
-                    <div id="lockedSavingsList" class="space-y-3">
-                        <div class="text-center py-8 text-gray-400">
-                            <i class="fas fa-piggy-bank text-4xl mb-2"></i>
-                            <p>No mood savings yet. Select your mood and start saving!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Flowtracker Page -->
-            <div id="flowtrackerPage" class="page hidden fade-in">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Flowtracker</h2>
-                    <p class="text-gray-600">Track your cycle, manage your finances</p>
-                </div>
-
-                <!-- Introduction Card -->
-                <div class="bg-gradient-to-r from-red-400 via-pink-500 to-rose-500 text-white rounded-xl p-6 card-shadow mb-6">
-                    <div class="flex items-center gap-3 mb-3">
-                        <i class="fas fa-calendar-heart text-3xl"></i>
+                    <h3 class="font-semibold text-gray-800 mb-4">Transfer Details</h3>
+                    <div class="space-y-4">
                         <div>
-                            <h3 class="text-xl font-bold">Flowtracker</h3>
-                            <p class="text-sm opacity-90">Period tracking meets smart banking</p>
-                        </div>
-                    </div>
-                    <p class="text-sm opacity-80">Now that MetroMood covers the emotional side of spending, Flowtracker helps you track actual patterns. Record your cycle, predict your next period, and keep track of symptoms.</p>
-                </div>
-
-                <!-- Period Alert -->
-                <div id="periodAlert" class="hidden bg-gradient-to-r from-rose-100 to-pink-100 border-l-4 border-rose-500 rounded-r-xl p-4 mb-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-rose-500 rounded-full flex items-center justify-center">
-                            <i class="fas fa-bell text-white"></i>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">From Account</label>
+                            <select id="transferFromAccount" class="form-input">
+                                <option>Savings Account - ₱125,450.75</option>
+                            </select>
                         </div>
                         <div>
-                            <p class="font-semibold text-rose-800">Period Coming Soon!</p>
-                            <p class="text-sm text-rose-600" id="periodAlertText">Your period is predicted to start in 3 days. Your savings are locked for this week.</p>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Bank</label>
+                            <select id="transferBank" class="form-input">
+                                <option value="metrobank">Metrobank</option>
+                                <option value="bdo">BDO</option>
+                                <option value="bpi">BPI</option>
+                                <option value="landbank">Landbank</option>
+                                <option value="gcash">GCash</option>
+                                <option value="maya">Maya</option>
+                            </select>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
+                            <input type="text" id="transferAccountNo" placeholder="Enter account number" class="form-input">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
+                                <input type="text" id="transferAmount" placeholder="0.00" class="form-input pl-8">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Notes (Optional)</label>
+                            <input type="text" id="transferNotes" placeholder="Add a note" class="form-input">
+                        </div>
+                        <button id="transferBtn" class="btn btn-primary w-full">
+                            <i class="fas fa-paper-plane mr-2"></i>Transfer Now
+                        </button>
                     </div>
                 </div>
-
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <!-- Calendar -->
-                    <div class="lg:col-span-2 bg-white rounded-xl p-6 card-shadow">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-semibold text-gray-800">Cycle Calendar</h3>
-                            <div class="flex items-center gap-2">
-                                <button id="prevMonth" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
-                                    <i class="fas fa-chevron-left text-gray-600"></i>
-                                </button>
-                                <span id="currentMonth" class="font-medium text-gray-700 w-32 text-center">January 2024</span>
-                                <button id="nextMonth" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
-                                    <i class="fas fa-chevron-right text-gray-600"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Calendar Grid -->
-                        <div class="grid grid-cols-7 gap-1 mb-2">
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sun</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Mon</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Tue</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Wed</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Thu</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Fri</div>
-                            <div class="text-center text-xs font-medium text-gray-500 py-2">Sat</div>
-                        </div>
-                        <div id="calendarGrid" class="grid grid-cols-7 gap-1">
-                            <!-- Calendar days will be generated here -->
-                        </div>
-
-                        <!-- Legend -->
-                        <div class="flex flex-wrap gap-4 mt-4 pt-4 border-t">
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 bg-red-200 rounded"></div>
-                                <span class="text-xs text-gray-600">Period Days</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 bg-orange-100 border-2 border-dashed border-orange-400 rounded"></div>
-                                <span class="text-xs text-gray-600">Predicted</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-4 h-4 border-2 border-[#004785] rounded"></div>
-                                <span class="text-xs text-gray-600">Today</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cycle Info & Symptoms -->
-                    <div class="space-y-6">
-                        <!-- Cycle Info -->
-                        <div class="bg-white rounded-xl p-5 card-shadow">
-                            <h3 class="font-semibold text-gray-800 mb-4">Cycle Overview</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600 text-sm">Cycle Length</span>
-                                    <span class="font-medium" id="cycleLength">28 days</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600 text-sm">Period Length</span>
-                                    <span class="font-medium" id="periodLength">5 days</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600 text-sm">Next Period</span>
-                                    <span class="font-medium text-rose-600" id="nextPeriod">Jan 28, 2024</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600 text-sm">Last Period</span>
-                                    <span class="font-medium" id="lastPeriod">Jan 1, 2024</span>
-                                </div>
-                            </div>
-                            <button id="logPeriodBtn" class="w-full mt-4 btn btn-danger">
-                                <i class="fas fa-plus mr-2"></i>Log Period
-                            </button>
-                        </div>
-
-                        <!-- Symptom Tracker -->
-                        <div class="bg-white rounded-xl p-5 card-shadow">
-                            <h3 class="font-semibold text-gray-800 mb-4">Today's Symptoms</h3>
-                            <div class="flex flex-wrap gap-2" id="symptomTags">
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="cramps">🤕 Cramps</span>
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="headache">😵 Headache</span>
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="bloating">😮‍💨 Bloating</span>
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="fatigue">😴 Fatigue</span>
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="mood">😢 Mood Swings</span>
-                                <span class="symptom-tag px-3 py-1 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="cravings">🍫 Cravings</span>
-                            </div>
-                            <button id="saveSymptoms" class="w-full mt-4 btn btn-primary">
-                                Save Symptoms
-                            </button>
-                        </div>
-
-                        <!-- Savings Lock Status -->
-                        <div id="flowSavingsLock" class="hidden locked-savings text-white rounded-xl p-5 card-shadow">
-                            <div class="flex items-center gap-3 mb-3">
-                                <i class="fas fa-lock text-2xl"></i>
-                                <div>
-                                    <p class="font-bold">Savings Locked</p>
-                                    <p class="text-sm opacity-80">Period week protection</p>
-                                </div>
-                            </div>
-                            <p class="text-sm opacity-90">Your savings are protected during your cycle week to prevent impulsive spending.</p>
-                            <p class="text-xs mt-2 opacity-70">Unlocks: <span id="unlockDate">Feb 7, 2024</span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Symptom History -->
-                <div class="bg-white rounded-xl p-6 card-shadow mt-6">
-                    <h3 class="font-semibold text-gray-800 mb-4">Symptom History</h3>
-                    <div id="symptomHistory" class="space-y-2">
-                        <div class="text-center py-6 text-gray-400">
-                            <i class="fas fa-clipboard-list text-3xl mb-2"></i>
-                            <p>No symptoms logged yet</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings Page -->
-            <div id="settingsPage" class="page hidden fade-in">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
                 
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- Profile Settings -->
-                    <div class="bg-white rounded-xl p-6 card-shadow">
-                        <h3 class="font-semibold text-gray-800 mb-4">Profile Information</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user text-white text-3xl"></i>
-                                </div>
-                                <div>
-                                    <button class="btn btn-outline text-sm">Change Photo</button>
-                                </div>
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="font-semibold text-gray-800 mb-4">Saved Accounts</h3>
+                    <div id="savedAccountsList" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bills Page -->
+        <div id="billsPage" class="page hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Pay Bills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('electricity')">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-bolt text-yellow-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Electricity</p>
+                    <p class="text-xs text-gray-500">Meralco, VECO</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('water')">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-tint text-blue-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Water</p>
+                    <p class="text-xs text-gray-500">Maynilad, Manila Water</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('internet')">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-wifi text-purple-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Internet</p>
+                    <p class="text-xs text-gray-500">PLDT, Globe, Converge</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('phone')">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-phone text-green-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Phone</p>
+                    <p class="text-xs text-gray-500">Postpaid plans</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('insurance')">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-shield-alt text-red-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Insurance</p>
+                    <p class="text-xs text-gray-500">Health, Life</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('credit')">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-credit-card text-orange-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Credit Card</p>
+                    <p class="text-xs text-gray-500">All banks</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('loans')">
+                    <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-hand-holding-usd text-teal-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Loans</p>
+                    <p class="text-xs text-gray-500">Home, Auto, Personal</p>
+                </div>
+                <div class="bill-category bg-white rounded-xl p-5 card-shadow cursor-pointer" onclick="showBillPayment('government')">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-3">
+                        <i class="fas fa-landmark text-indigo-600 text-xl"></i>
+                    </div>
+                    <p class="font-semibold text-gray-800 text-sm">Government</p>
+                    <p class="text-xs text-gray-500">SSS, PhilHealth</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Page -->
+        <div id="transactionsPage" class="page hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Transaction History</h2>
+            <div class="bg-white rounded-xl p-4 card-shadow mb-4">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="searchTransactions" placeholder="Search transactions..." class="form-input flex-1">
+                    <select id="filterType" class="form-input sm:w-40">
+                        <option value="all">All Types</option>
+                        <option value="credit">Money In</option>
+                        <option value="debit">Money Out</option>
+                    </select>
+                </div>
+            </div>
+            <div id="allTransactionsList" class="space-y-3"></div>
+        </div>
+
+        <!-- MetroMood Page - WHITE & PINK THEME -->
+        <div id="metromoodPage" class="page hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold">MetroMood</h2>
+                <p class="text-pink-600">Banking that understands how you feel</p>
+            </div>
+
+            <!-- Introduction Card -->
+            <div class="intro-card text-white rounded-2xl p-6 card-shadow mb-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-heart text-3xl pulse-animation"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Welcome to MetroMood</h3>
+                        <p class="text-sm opacity-90">Your mood determines your savings goal</p>
+                    </div>
+                </div>
+                <p class="text-sm opacity-80">From Metrobank's trusted services, we bring you a tool designed to make banking feel more personal. Select your mood and let us help you save smarter!</p>
+            </div>
+
+            <!-- Balance Display -->
+            <div class="card-white rounded-2xl p-6 card-shadow mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <p class="text-gray-500 text-sm">Available Balance</p>
+                        <p class="text-3xl font-bold text-gray-800" id="moodBalance">₱ 125,450.75</p>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-center">
+                            <p class="text-gray-500 text-xs">Mood Savings</p>
+                            <p class="text-xl font-bold text-pink-600" id="moodSavingsTotal">₱ 0.00</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-gray-500 text-xs">Locked Until</p>
+                            <p class="text-sm font-medium text-gray-600" id="lockStatus">No locked funds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood Selection -->
+            <div class="card-white rounded-2xl p-6 card-shadow mb-6">
+                <h3 class="font-semibold text-gray-800 mb-2">How are you feeling today?</h3>
+                <p class="text-sm text-gray-500 mb-6">Your mood helps us suggest the perfect savings goal for you</p>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-6" id="moodBubbles">
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex flex-col items-center justify-center text-white" data-mood="happy" data-goal="500">
+                        <span class="mood-emoji text-2xl">😊</span>
+                        <span class="text-xs font-medium">Happy</span>
+                    </div>
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex flex-col items-center justify-center text-white" data-mood="calm" data-goal="300">
+                        <span class="mood-emoji text-2xl">😌</span>
+                        <span class="text-xs font-medium">Calm</span>
+                    </div>
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex flex-col items-center justify-center text-white" data-mood="excited" data-goal="1000">
+                        <span class="mood-emoji text-2xl">🤩</span>
+                        <span class="text-xs font-medium">Excited</span>
+                    </div>
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex flex-col items-center justify-center text-white" data-mood="thoughtful" data-goal="750">
+                        <span class="mood-emoji text-2xl">🤔</span>
+                        <span class="text-xs font-medium">Thoughtful</span>
+                    </div>
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex flex-col items-center justify-center text-white" data-mood="grateful" data-goal="1500">
+                        <span class="mood-emoji text-2xl">🥰</span>
+                        <span class="text-xs font-medium">Grateful</span>
+                    </div>
+                    <div class="mood-bubble w-20 h-20 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex flex-col items-center justify-center text-white" data-mood="stressed" data-goal="200">
+                        <span class="mood-emoji text-2xl">😰</span>
+                        <span class="text-xs font-medium">Stressed</span>
+                    </div>
+                </div>
+
+                <!-- Savings Goal Display -->
+                <div id="savingsGoalCard" class="hidden savings-goal-card rounded-xl p-5">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center text-white text-2xl" id="selectedMoodEmoji">😊</div>
+                        <div>
+                            <p class="text-sm text-gray-600">Based on your <span id="selectedMoodText" class="font-semibold text-pink-600">happy</span> mood</p>
+                            <p class="text-lg font-bold text-gray-800">Suggested Savings: <span id="suggestedAmount" class="text-pink-600">₱500</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="flex-1">
+                            <label class="text-sm text-gray-600 mb-1 block">Amount to Save</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
+                                <input type="number" id="saveAmount" class="form-input form-input-pink pl-8" placeholder="Enter amount">
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <input type="text" id="settingsName" class="form-input" value="Juan Dela Cruz">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                <input type="email" id="settingsEmail" class="form-input" value="juan.delacruz@email.com">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                <input type="tel" id="settingsPhone" class="form-input" value="+63 917 123 4567">
-                            </div>
-                            <button id="saveProfileBtn" class="btn btn-primary">
-                                <i class="fas fa-save mr-2"></i>Save Changes
+                        </div>
+                        <button id="saveFundsBtn" class="btn btn-pink self-end">
+                            <i class="fas fa-lock mr-2"></i>Save & Lock
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3"><i class="fas fa-info-circle mr-1"></i>Funds will be locked for 7 days to help you build consistency</p>
+                </div>
+            </div>
+
+            <!-- Locked Savings -->
+            <div class="card-white rounded-2xl p-6 card-shadow">
+                <h3 class="font-semibold text-gray-800 mb-4">Your Mood Savings</h3>
+                <div id="lockedSavingsList" class="space-y-3">
+                    <div class="text-center py-8 text-gray-400">
+                        <i class="fas fa-piggy-bank text-4xl mb-3 text-pink-300"></i>
+                        <p>No mood savings yet. Select your mood and start saving!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flowtracker Page - WHITE & PINK THEME -->
+        <div id="flowtrackerPage" class="page hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold">Flowtracker</h2>
+                <p class="text-pink-600">Track your cycle, manage your finances</p>
+            </div>
+
+            <!-- Introduction Card -->
+            <div class="intro-card text-white rounded-2xl p-6 card-shadow mb-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-alt text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Flowtracker</h3>
+                        <p class="text-sm opacity-90">Period tracking meets smart banking</p>
+                    </div>
+                </div>
+                <p class="text-sm opacity-80">Now that MetroMood covers the emotional side of spending, Flowtracker helps you track actual patterns. Record your cycle, predict your next period, and keep track of symptoms.</p>
+            </div>
+
+            <!-- Period Alert -->
+            <div id="periodAlert" class="hidden period-alert rounded-xl p-4 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-bell text-white"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-pink-800">Period Coming Soon!</p>
+                        <p class="text-sm text-pink-600" id="periodAlertText">Your period is predicted to start in 3 days.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Calendar -->
+                <div class="lg:col-span-2 card-white rounded-2xl p-6 card-shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800">Cycle Calendar</h3>
+                        <div class="flex items-center gap-2">
+                            <button id="prevMonth" class="w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 flex items-center justify-center transition-colors">
+                                <i class="fas fa-chevron-left text-pink-600"></i>
+                            </button>
+                            <span id="currentMonth" class="font-medium text-gray-700 w-32 text-center">January 2024</span>
+                            <button id="nextMonth" class="w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 flex items-center justify-center transition-colors">
+                                <i class="fas fa-chevron-right text-pink-600"></i>
                             </button>
                         </div>
                     </div>
                     
-                    <!-- Security Settings -->
-                    <div class="space-y-6">
-                        <div class="bg-white rounded-xl p-6 card-shadow">
-                            <h3 class="font-semibold text-gray-800 mb-4">Security</h3>
-                            <div class="space-y-4">
-                                <button id="changePasswordBtn" class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fas fa-key text-gray-600"></i>
-                                        <span>Change Password</span>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-gray-400"></i>
-                                </button>
-                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fas fa-fingerprint text-gray-600"></i>
-                                        <span>Biometrics Login</span>
-                                    </div>
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="biometricsToggle" class="sr-only peer">
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#004785]"></div>
-                                    </label>
-                                </div>
+                    <!-- Calendar Grid -->
+                    <div class="grid grid-cols-7 gap-1 mb-2">
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Sun</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Mon</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Tue</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Wed</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Thu</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Fri</div>
+                        <div class="text-center text-xs font-medium text-gray-500 py-2">Sat</div>
+                    </div>
+                    <div id="calendarGrid" class="grid grid-cols-7 gap-1"></div>
+
+                    <!-- Legend -->
+                    <div class="flex flex-wrap gap-4 mt-4 pt-4 border-t border-pink-100">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-pink-300 rounded"></div>
+                            <span class="text-xs text-gray-600">Period Days</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-pink-50 border-2 border-dashed border-pink-400 rounded"></div>
+                            <span class="text-xs text-gray-600">Predicted</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 border-2 border-pink-500 rounded"></div>
+                            <span class="text-xs text-gray-600">Today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cycle Info & Symptoms -->
+                <div class="space-y-6">
+                    <!-- Cycle Info -->
+                    <div class="card-white rounded-2xl p-5 card-shadow">
+                        <h3 class="font-semibold text-gray-800 mb-4">Cycle Overview</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Cycle Length</span>
+                                <span class="font-medium" id="cycleLength">28 days</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Period Length</span>
+                                <span class="font-medium" id="periodLength">5 days</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Next Period</span>
+                                <span class="font-medium text-pink-600" id="nextPeriod">Jan 28, 2024</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600 text-sm">Last Period</span>
+                                <span class="font-medium" id="lastPeriod">Jan 1, 2024</span>
                             </div>
                         </div>
-                        
-                        <div class="bg-white rounded-xl p-6 card-shadow">
-                            <h3 class="font-semibold text-gray-800 mb-4">Notifications</h3>
+                        <button id="logPeriodBtn" class="w-full mt-4 btn btn-pink">
+                            <i class="fas fa-plus mr-2"></i>Log Period
+                        </button>
+                    </div>
+
+                    <!-- Symptom Tracker -->
+                    <div class="card-white rounded-2xl p-5 card-shadow">
+                        <h3 class="font-semibold text-gray-800 mb-4">Today's Symptoms</h3>
+                        <div class="flex flex-wrap gap-2" id="symptomTags">
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="cramps">🤕 Cramps</span>
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="headache">😵 Headache</span>
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="bloating">😮‍💨 Bloating</span>
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="fatigue">😴 Fatigue</span>
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="mood">😢 Mood Swings</span>
+                            <span class="symptom-tag px-3 py-1.5 bg-gray-100 rounded-full text-sm cursor-pointer" data-symptom="cravings">🍫 Cravings</span>
+                        </div>
+                        <button id="saveSymptoms" class="w-full mt-4 btn btn-pink">
+                            Save Symptoms
+                        </button>
+                    </div>
+
+                    <!-- Savings Lock Status -->
+                    <div id="flowSavingsLock" class="hidden locked-savings-pink rounded-2xl p-5 card-shadow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <i class="fas fa-lock text-2xl"></i>
+                            <div>
+                                <p class="font-bold">Savings Locked</p>
+                                <p class="text-sm opacity-80">Period week protection</p>
+                            </div>
+                        </div>
+                        <p class="text-sm opacity-90">Your savings are protected during your cycle week to prevent impulsive spending.</p>
+                        <p class="text-xs mt-2 opacity-70">Unlocks: <span id="unlockDate">Feb 7, 2024</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Symptom History -->
+            <div class="card-white rounded-2xl p-6 card-shadow mt-6">
+                <h3 class="font-semibold text-gray-800 mb-4">Symptom History</h3>
+                <div id="symptomHistory" class="space-y-2">
+                    <div class="text-center py-6 text-gray-400">
+                        <i class="fas fa-clipboard-list text-3xl mb-2 text-pink-300"></i>
+                        <p>No symptoms logged yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settingsPage" class="page hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 card-shadow">
+                    <h3 class="font-semibold text-gray-800 mb-4">Profile Information</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-3xl"></i>
+                            </div>
+                            <button class="btn btn-outline text-sm">Change Photo</button>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="settingsName" class="form-input" value="Juan Dela Cruz">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="settingsEmail" class="form-input" value="juan.delacruz@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="settingsPhone" class="form-input" value="+63 917 123 4567">
+                        </div>
+                        <button id="saveProfileBtn" class="btn btn-primary">
+                            <i class="fas fa-save mr-2"></i>Save Changes
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="font-semibold text-gray-800 mb-4">Security</h3>
+                        <div class="space-y-4">
+                            <button id="changePasswordBtn" class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-key text-gray-600"></i>
+                                    <span>Change Password</span>
+                                </div>
+                                <i class="fas fa-chevron-right text-gray-400"></i>
+                            </button>
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                 <div class="flex items-center gap-3">
-                                    <i class="fas fa-bell text-gray-600"></i>
-                                    <span>Push Notifications</span>
+                                    <i class="fas fa-fingerprint text-gray-600"></i>
+                                    <span>Biometrics Login</span>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="notificationToggle" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#004785]"></div>
+                                    <input type="checkbox" id="biometricsToggle" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
                                 </label>
                             </div>
                         </div>
-                        
-                        <div class="bg-white rounded-xl p-6 card-shadow">
-                            <button id="logoutBtn" class="w-full btn btn-danger">
-                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                            </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <h3 class="font-semibold text-gray-800 mb-4">Notifications</h3>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-bell text-gray-600"></i>
+                                <span>Push Notifications</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="notificationToggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
+                            </label>
                         </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 card-shadow">
+                        <button id="logoutBtn" class="w-full btn btn-danger">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
-    <!-- ============================================
-         MODALS
-         ============================================ -->
+    <!-- MODALS -->
 
     <!-- Transaction Detail Modal -->
     <div id="transactionModal" class="modal-overlay">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Transaction Details</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('transactionModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -759,26 +746,11 @@
                 <p id="txDetailAmount" class="text-2xl font-bold text-red-600">₱ 1,500.00</p>
             </div>
             <div class="space-y-3 text-sm">
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Type</span>
-                    <span id="txDetailType" class="font-medium">Money Out</span>
-                </div>
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Date</span>
-                    <span id="txDetailDate" class="font-medium">January 20, 2024</span>
-                </div>
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Time</span>
-                    <span id="txDetailTime" class="font-medium">10:30 AM</span>
-                </div>
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Category</span>
-                    <span id="txDetailCategory" class="font-medium">Transfer</span>
-                </div>
-                <div class="flex justify-between py-2">
-                    <span class="text-gray-500">Reference No.</span>
-                    <span id="txDetailRef" class="font-medium">MB000000000001</span>
-                </div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Type</span><span id="txDetailType" class="font-medium">Money Out</span></div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Date</span><span id="txDetailDate" class="font-medium">January 20, 2024</span></div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Time</span><span id="txDetailTime" class="font-medium">10:30 AM</span></div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Category</span><span id="txDetailCategory" class="font-medium">Transfer</span></div>
+                <div class="flex justify-between py-2"><span class="text-gray-500">Reference No.</span><span id="txDetailRef" class="font-medium">MB000000000001</span></div>
             </div>
         </div>
     </div>
@@ -788,23 +760,14 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 id="accountDetailTitle" class="text-lg font-bold text-gray-800">Account Details</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('accountDetailModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <div class="space-y-3 text-sm">
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Account Number</span>
-                    <span id="accountDetailNumber" class="font-medium">1234-5678-9012-3456</span>
-                </div>
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Balance</span>
-                    <span id="accountDetailBalance" class="font-medium text-lg">₱ 125,450.75</span>
-                </div>
-                <div class="flex justify-between py-2 border-b">
-                    <span class="text-gray-500">Status</span>
-                    <span id="accountDetailStatus" class="font-medium text-green-600">Active</span>
-                </div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Account Number</span><span id="accountDetailNumber" class="font-medium">1234-5678-9012-3456</span></div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Balance</span><span id="accountDetailBalance" class="font-medium text-lg">₱ 125,450.75</span></div>
+                <div class="flex justify-between py-2 border-b"><span class="text-gray-500">Status</span><span id="accountDetailStatus" class="font-medium text-green-600">Active</span></div>
                 <div id="accountExtraInfo" class="space-y-2 py-2"></div>
             </div>
             <div class="mt-4 flex gap-2">
@@ -819,16 +782,14 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Pay <span id="billCategoryTitle">Bills</span></h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('billPaymentModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Biller</label>
-                    <select id="billBiller" class="form-input">
-                        <option value="">Select Biller</option>
-                    </select>
+                    <select id="billBiller" class="form-input"><option value="">Select Biller</option></select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
@@ -841,7 +802,7 @@
                         <input type="number" id="billAmount" placeholder="0.00" class="form-input pl-8">
                     </div>
                 </div>
-                <button id="payBillBtn" onclick="processBillPayment()" class="btn btn-primary w-full">
+                <button id="payBillBtn" class="btn btn-primary w-full">
                     <i class="fas fa-check mr-2"></i>Pay Bill
                 </button>
             </div>
@@ -853,7 +814,7 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Buy Load</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('loadModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -880,13 +841,11 @@
                         <option value="20">₱20</option>
                         <option value="50">₱50</option>
                         <option value="100">₱100</option>
-                        <option value="200">₱200</option>
                         <option value="300">₱300</option>
                         <option value="500">₱500</option>
-                        <option value="1000">₱1,000</option>
                     </select>
                 </div>
-                <button id="processLoadBtn" onclick="processLoad()" class="btn btn-primary w-full">
+                <button id="processLoadBtn" class="btn btn-primary w-full">
                     <i class="fas fa-paper-plane mr-2"></i>Buy Load
                 </button>
             </div>
@@ -898,23 +857,19 @@
         <div class="modal-content text-center">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">QR Pay</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('qrModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            <div class="bg-white p-4 rounded-lg inline-block mb-4">
-                <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center mx-auto">
-                    <i class="fas fa-qrcode text-8xl text-gray-400"></i>
+            <div class="bg-gray-50 p-6 rounded-xl mb-4">
+                <div class="w-48 h-48 bg-white rounded-lg flex items-center justify-center mx-auto border-2 border-gray-200">
+                    <i class="fas fa-qrcode text-7xl text-gray-400"></i>
                 </div>
             </div>
             <p class="text-sm text-gray-600 mb-4">Scan this QR code to receive payment</p>
             <div class="flex gap-2">
-                <button class="btn btn-primary flex-1">
-                    <i class="fas fa-camera mr-2"></i>Scan QR
-                </button>
-                <button class="btn btn-outline flex-1">
-                    <i class="fas fa-download mr-2"></i>Save QR
-                </button>
+                <button class="btn btn-primary flex-1"><i class="fas fa-camera mr-2"></i>Scan QR</button>
+                <button class="btn btn-outline flex-1"><i class="fas fa-download mr-2"></i>Save QR</button>
             </div>
         </div>
     </div>
@@ -924,42 +879,42 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">More Actions</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('moreActionsModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('metromood');">
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-pink-50" onclick="closeModal('moreActionsModal'); navigateTo('metromood');">
                     <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-heart text-pink-600"></i>
                     </div>
                     <span class="text-xs text-gray-600">MetroMood</span>
                 </div>
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('flowtracker');">
-                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-calendar-alt text-red-600"></i>
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-pink-50" onclick="closeModal('moreActionsModal'); navigateTo('flowtracker');">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calendar-alt text-pink-600"></i>
                     </div>
                     <span class="text-xs text-gray-600">Flowtracker</span>
                 </div>
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('accounts');">
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('accounts');">
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-university text-blue-600"></i>
                     </div>
                     <span class="text-xs text-gray-600">Accounts</span>
                 </div>
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('transactions');">
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('transactions');">
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-history text-green-600"></i>
                     </div>
                     <span class="text-xs text-gray-600">History</span>
                 </div>
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('settings');">
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-gray-50" onclick="closeModal('moreActionsModal'); navigateTo('settings');">
                     <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-cog text-gray-600"></i>
                     </div>
                     <span class="text-xs text-gray-600">Settings</span>
                 </div>
-                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-lg hover:bg-gray-50" onclick="closeModal('moreActionsModal'); showToast('Coming soon!', 'info');">
+                <div class="quick-action flex flex-col items-center gap-2 cursor-pointer p-3 rounded-xl hover:bg-gray-50" onclick="closeModal('moreActionsModal'); showToast('Coming soon!', 'info');">
                     <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
                         <i class="fas fa-headset text-purple-600"></i>
                     </div>
@@ -974,7 +929,7 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Log Period</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('logPeriodModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -995,9 +950,7 @@
                         <option value="heavy">Heavy</option>
                     </select>
                 </div>
-                <button id="savePeriod" class="btn btn-danger w-full">
-                    Save Period
-                </button>
+                <button id="savePeriodBtn" class="btn btn-pink w-full">Save Period</button>
             </div>
         </div>
     </div>
@@ -1007,7 +960,7 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Change Password</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('changePasswordModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -1024,9 +977,7 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
                     <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
                 </div>
-                <button onclick="changePassword()" class="btn btn-primary w-full">
-                    Change Password
-                </button>
+                <button id="changePasswordSubmit" class="btn btn-primary w-full">Change Password</button>
             </div>
         </div>
     </div>
@@ -1036,7 +987,7 @@
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Notifications</h3>
-                <button data-close-modal class="text-gray-400 hover:text-gray-600">
+                <button onclick="closeModal('notificationsModal')" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -1046,21 +997,21 @@
                     <p class="text-sm text-gray-600">Thank you for using our online banking services.</p>
                     <p class="text-xs text-gray-400 mt-1">Just now</p>
                 </div>
+                <div class="p-3 bg-pink-50 rounded-lg border-l-4 border-pink-500">
+                    <p class="font-medium text-gray-800">New Feature: MetroMood & Flowtracker</p>
+                    <p class="text-sm text-gray-600">Try our new wellness tools for smarter savings!</p>
+                    <p class="text-xs text-gray-400 mt-1">Today</p>
+                </div>
                 <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
                     <p class="font-medium text-gray-800">Salary Credited</p>
                     <p class="text-sm text-gray-600">₱35,000.00 has been credited to your account.</p>
                     <p class="text-xs text-gray-400 mt-1">Yesterday</p>
                 </div>
-                <div class="p-3 bg-purple-50 rounded-lg border-l-4 border-purple-500">
-                    <p class="font-medium text-gray-800">New Feature: MetroMood</p>
-                    <p class="text-sm text-gray-600">Try our new mood-based savings feature!</p>
-                    <p class="text-xs text-gray-400 mt-1">2 days ago</p>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Login Modal (for logout simulation) -->
+    <!-- Login Modal -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal-content">
             <div class="text-center mb-6">
@@ -1077,24 +1028,19 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" class="form-input" placeholder="Enter password" value="••••••••">
+                    <input type="password" class="form-input" placeholder="Enter password" value="password123">
                 </div>
-                <button onclick="closeModal('loginModal'); showToast('Welcome back!', 'success');" class="btn btn-primary w-full">
-                    Sign In
-                </button>
+                <button onclick="closeModal('loginModal'); showToast('Welcome back!', 'success');" class="btn btn-primary w-full">Sign In</button>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast">
-        <div class="flex items-center gap-2">
-            <i id="toastIcon" class="fas fa-check-circle"></i>
-            <span id="toastMessage">Success!</span>
-        </div>
+        <i id="toastIcon" class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
     </div>
 
-    <!-- Load JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
